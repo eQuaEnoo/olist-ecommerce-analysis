@@ -17,6 +17,20 @@ Tools: Python, DuckDB (SQL), pandas, Power BI.
 - Reviews are deduplicated to one per order (814 duplicate review IDs in the raw data).
 - Monthly trends use full months only (Jan 2017 to Aug 2018). There are no delivered orders in Nov 2016 or after Aug 2018.
 
+## Steps to reproduce
+1. Clone the repo and create an environment (Python 3.12 recommended):
+   ```
+   git clone https://github.com/eQuaEnoo/first-analysis.git
+   cd first-analysis
+   python -m venv .venv
+   .venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+2. Download the **Brazilian E-Commerce Public Dataset by Olist** from Kaggle and place the 9 CSV files in `data/raw/`.
+3. Open `notebooks/01-explore.ipynb`, select the `.venv` kernel and run all cells in order. The first cell builds a local DuckDB database from the CSVs, and the rest run the cleaning and analysis.
+
+The raw data and the database file are not stored in this repo (see `.gitignore`).
+
 ## Findings
 
 ### Q1: Revenue by category and over time
