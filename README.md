@@ -16,12 +16,13 @@ Tools: Python, DuckDB (SQL), pandas, Power BI.
 - Currency is Brazilian reais (R$).
 - Reviews are deduplicated to one per order (814 duplicate review IDs in the raw data).
 - Monthly trends use full months only (Jan 2017 to Aug 2018). There are no delivered orders in Nov 2016 or after Aug 2018.
+- Lateness is measured in calendar days against the estimated delivery date. 646 delivered orders (0.7%) have no review and are excluded from the review analysis.
 
 ## Steps to reproduce
 1. Clone the repo and create an environment (Python 3.12 recommended):
    ```
-   git clone https://github.com/eQuaEnoo/first-analysis.git
-   cd first-analysis
+   git clone https://github.com/eQuaEnoo/olist-ecommerce-analysis.git
+   cd olist-ecommerce-analysis
    python -m venv .venv
    .venv\Scripts\activate
    pip install -r requirements.txt
@@ -42,3 +43,11 @@ The raw data and the database file are not stored in this repo (see `.gitignore`
 ![Monthly revenue](reports/monthly_revenue.png)
 ![Top categories](reports/top_categories.png)
 ![Daily revenue around Black Friday](reports/black_friday_daily.png)
+
+### Q2: Delivery performance and reviews
+- Most orders arrive early: the median delivered order arrived 12 days before the estimated date, and only 6.8% of 96,470 delivered orders were late (by 10.6 days on average).
+- Lateness hurts reviews sharply. On-time orders average 4.29 stars with 9.3% rated 1 or 2. Orders 1 to 3 days late average 3.29 (32.1% low), and orders more than 7 days late average 1.70 (79.3% low).
+- Late orders are 6.7% of reviewed orders but account for 32% of all 1 and 2 star reviews, so the small late tail drives a large share of customer dissatisfaction.
+- This is an association, not proof of cause: late orders may also have other problems, but the score drops at every step of lateness.
+
+![Delivery lateness vs review scores](reports/delivery_vs_reviews.png)
