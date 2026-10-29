@@ -1,7 +1,26 @@
 # Olist E-commerce Analysis
 
 Business analysis of the Olist Brazilian e-commerce public dataset (about 99k orders, spanning 2016 to 2018).
-Tools: Python, DuckDB (SQL), pandas, matplotlib, numpy.
+Tools: Python, DuckDB (SQL), pandas, matplotlib.
+
+## Key findings and recommendations
+
+Scope: 96,470 delivered orders and 93,350 customers (Sep 2016 to Aug 2018), worth R$13.2M in item revenue. Details, definitions and charts for each question are further down.
+
+1. **Late delivery is the clearest driver of poor reviews.** Only 6.8% of orders arrive late, but they produce about a third (32.5%) of all 1 and 2 star reviews. The average score falls from 4.29 (on time) to 1.70 (more than 7 days late). This is an association rather than proven cause.
+   *Suggested action:* treat late deliveries as the first lever for improving customer satisfaction.
+
+2. **Late deliveries cluster in Rio de Janeiro and the northeast.** RJ and the nine northeastern states are about 22% of orders but about 40% of late orders. In RJ, 12.1% of orders are late versus 4.5% in São Paulo.
+   *Suggested action:* start any carrier or fulfilment review with RJ and the northeast.
+
+3. **Growth has come from new customers, not repeat buyers.** 97.0% of customers bought once, and 94.5% of revenue comes from one-time customers. About 30% of "repeat" buyers ordered again on the same day, so only around 2.1% of customers genuinely returned.
+   *Suggested action:* retention is the largest untapped opportunity, so test post-purchase follow-ups for first-time buyers.
+
+4. **Demand is strongly seasonal.** Black Friday (24 Nov 2017) brought R$150k in one day, 6.6x a typical day and about 15% of that month's revenue. Monthly revenue then levelled off at R$0.83 to 0.98M through 2018.
+   *Suggested action:* plan stock and delivery capacity ahead of peak promotion days.
+
+5. **Revenue is broad-based, and card instalments go with bigger orders.** The top 10 categories make up 62% of revenue, and watches_gifts earns its rank on high spend per order (about R$212 vs R$110 for bed_bath_table). Credit card is used in 77% of orders, and card orders have the highest typical value (median R$109), with 3.5 instalments on average.
+   *Suggested action:* keep instalment options prominent at checkout, since card orders are larger (association, not proven cause).
 
 ## Business questions
 1. Which product categories generate the most revenue, and how has revenue trended month by month?
@@ -19,6 +38,7 @@ Tools: Python, DuckDB (SQL), pandas, matplotlib, numpy.
 - Reviews are deduplicated to one per order (814 duplicate review IDs in the raw data).
 - Monthly trends use full months only (Jan 2017 to Aug 2018). There are no delivered orders in Nov 2016 or after Aug 2018.
 - Lateness is measured in calendar days against the estimated delivery date. 646 delivered orders (0.7%) have no review and are excluded from the review analysis.
+- Order value in Q5 is the total the customer paid (items plus freight), so it is higher than item revenue. One delivered order has no payment record and is excluded from Q5.
 
 ## Steps to reproduce
 1. Clone the repo and create an environment (Python 3.12 recommended):
@@ -71,3 +91,12 @@ The raw data and the database file are not stored in this repo (see `.gitignore`
 - Repeat buyers are a small but valuable group: they are 3.0% of customers but 5.5% of revenue (R$728k of R$13.2M), and spent R$260 each on average versus R$138 for one-time customers, because they placed two or more orders.
 - 94.5% of revenue comes from customers who bought once, which suggests growth in 2017 and 2018 came from acquiring new customers rather than from repeat purchases. Retention is the clearest opportunity in this dataset.
 - Caveats: the data covers about two years, so recent customers had little time to buy again, and `customer_unique_id` is the dataset's own identifier, so a person using different details would count as separate customers. The true repeat rate may be somewhat higher than 3.0%.
+
+### Q5: Payment methods
+- Credit card dominates: it is used in 77.0% of delivered orders and accounts for 78.5% of the R$15.4M paid. Boleto (a Brazilian bank-slip payment) is a distant second (19.9% of orders, 18.0% of value), followed by voucher (3.8%) and debit card (1.5%). Order percentages add to more than 100% because 2.3% of orders (2,182) were paid with more than one method.
+- Those mixed-payment orders are almost all a credit card combined with a voucher: vouchers appear in 3,679 orders, but only 1,498 were paid with a voucher alone.
+- Among orders paid with a single method, credit card orders are the largest: median R$109 (average R$166), versus R$94 (R$144) for boleto, R$90 (R$140) for debit card and R$70 (R$105) for voucher. Credit card customers paid in 3.5 instalments on average, while the other methods are single payments.
+- Averages sit well above medians for every method because a small number of large orders pull the mean up, so the medians are the better guide to a typical order.
+- Order value here includes freight (R$15.4M paid overall versus R$13.2M of item revenue), so it is not directly comparable with the revenue figures above.
+
+![Payment methods](reports/payment_methods.png)
