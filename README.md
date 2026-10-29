@@ -64,3 +64,10 @@ The raw data and the database file are not stored in this repo (see `.gitignore`
 
 ![Delivery time by state](reports/delivery_by_state.png)
 ![Late deliveries vs reviews by state](reports/late_vs_reviews_by_state.png)
+
+### Q4: Repeat customers
+- 97.0% of customers (90,549 of 93,350 with a delivered order) bought only once. 2.8% bought twice (2,573) and 0.2% three or more times (228), so only 3.0% are repeat buyers.
+- About 30% of those repeat buyers (29.6%) placed their second order on the same day as their first, which looks like a split purchase rather than a return visit. Excluding them, roughly 2.1% of customers came back on a later day. Half of repeat buyers placed their second order within 30 days of their first (median: 29 days).
+- Repeat buyers are a small but valuable group: they are 3.0% of customers but 5.5% of revenue (R$728k of R$13.2M), and spent R$260 each on average versus R$138 for one-time customers, because they placed two or more orders.
+- 94.5% of revenue comes from customers who bought once, which suggests growth in 2017 and 2018 came from acquiring new customers rather than from repeat purchases. Retention is the clearest opportunity in this dataset.
+- Caveats: the data covers about two years, so recent customers had little time to buy again, and `customer_unique_id` is the dataset's own identifier, so a person using different details would count as separate customers. The true repeat rate may be somewhat higher than 3.0%.
