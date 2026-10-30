@@ -3,3 +3,4 @@ duckdb
 matplotlib
 jupyterlab
 ipykernel
+numpy
