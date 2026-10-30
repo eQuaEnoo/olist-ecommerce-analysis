@@ -5,29 +5,29 @@ Tools: Python, DuckDB (SQL), pandas, matplotlib.
 
 ## Key findings and recommendations
 
-Scope: 96,470 delivered orders and 93,350 customers (Sep 2016 to Aug 2018), worth R$13.2M in item revenue. Details, definitions and charts for each question are further down.
+Scope: 96,470 delivered orders and 93,350 customers with a delivered order (Sep 2016 to Aug 2018), worth R$13.2M in item revenue. Details, definitions and charts for each question are further down.
 
-1. **Late delivery is the clearest driver of poor reviews.** Only 6.8% of orders arrive late, but they produce about a third (32.5%) of all 1 and 2 star reviews. The average score falls from 4.29 (on time) to 1.70 (more than 7 days late). This is an association rather than proven cause.
-   *Suggested action:* treat late deliveries as the first lever for improving customer satisfaction.
+1. **Late deliveries are strongly linked to poor reviews.** Only 6.8% of orders arrive late, but they produce about a third (32.5%) of all 1 and 2 star reviews. The average score falls from 4.29 (on time) to 1.70 (more than 7 days late). This is an association rather than proven cause, and other factors were not tested.
+   *Suggested action:* treat late deliveries as the first lever to test for improving customer satisfaction.
 
 2. **Late deliveries cluster in Rio de Janeiro and the northeast.** RJ and the nine northeastern states are about 22% of orders but about 40% of late orders. In RJ, 12.1% of orders are late versus 4.5% in São Paulo.
    *Suggested action:* start any carrier or fulfilment review with RJ and the northeast.
 
-3. **Growth has come from new customers, not repeat buyers.** 97.0% of customers bought once, and 94.5% of revenue comes from one-time customers. About 30% of "repeat" buyers ordered again on the same day, so only around 2.1% of customers genuinely returned.
+3. **Growth has come from new customers, not repeat buyers.** 97.0% of customers bought once, and 94.5% of revenue comes from one-time customers. About 30% of "repeat" buyers ordered again on the same day, so only around 2.1% of customers came back on a later day. The data covers only about two years, so the true repeat rate may be somewhat higher.
    *Suggested action:* retention is the largest untapped opportunity, so test post-purchase follow-ups for first-time buyers.
 
 4. **Demand is strongly seasonal.** Black Friday (24 Nov 2017) brought R$150k in one day, 6.6x a typical day and about 15% of that month's revenue. Monthly revenue then levelled off at R$0.83 to 0.98M through 2018.
    *Suggested action:* plan stock and delivery capacity ahead of peak promotion days.
 
-5. **Revenue is broad-based, and card instalments go with bigger orders.** The top 10 categories make up 62% of revenue, and watches_gifts earns its rank on high spend per order (about R$212 vs R$110 for bed_bath_table). Credit card is used in 77% of orders, and card orders have the highest typical value (median R$109), with 3.5 instalments on average.
-   *Suggested action:* keep instalment options prominent at checkout, since card orders are larger (association, not proven cause).
+5. **Revenue is broad-based, and credit card dominates payments.** The top 10 categories make up 62% of revenue, and watches_gifts earns its rank on high spend per order (about R$212 vs R$110 for bed_bath_table). Credit card is used in 77% of orders, and credit-card orders have a higher typical value than boleto orders (median R$109 vs R$94), often paid in instalments (3.5 on average).
+   *Suggested action:* keep credit card and instalment options prominent at checkout. The data shows card orders are larger, not that instalments cause larger orders.
 
 ## Business questions
 1. Which product categories generate the most revenue, and how has revenue trended month by month?
 2. How late are deliveries compared with the estimated date, and does lateness hurt review scores?
 3. Which states have the most customers, and where is delivery slowest?
-4. How many customers buy more than once? (In progress)
-5. Which payment methods are used most, and how do they differ in order value? (In progress)
+4. How many customers buy more than once?
+5. Which payment methods are used most, and how do they differ in order value?
 
 ## Definitions and data notes
 - **Revenue** = sum of item price, excluding freight. Freight is a shipping charge, not product sales.
@@ -76,7 +76,7 @@ The raw data and the database file are not stored in this repo (see `.gitignore`
 
 ### Q3: Customers and delivery by state
 - Customers are heavily concentrated: São Paulo (SP) has 41.9% of unique customers, followed by Rio de Janeiro (RJ, 12.9%) and Minas Gerais (MG, 11.7%). The top 3 states hold 66.5% of customers and the top 10 hold 90.4%.
-- Delivery speed follows geography: the median is 7.2 days in SP, about 10 days in MG and PR, and 16 to 26 days across the north and northeast (AM 25.9, AL 22.3, PA 21.1, MA 19.2).
+- Delivery speed follows geography: the median is 7.2 days in SP, about 10 days in MG and PR, and roughly 16 to 26 days (AM 25.9, AL 22.3, PA 21.1, MA 19.2).
 - Slow is not the same as late. AM is the slowest state but only 2.8% of its orders were late (small sample: 145 orders), while AL is both slow and late (21.4% late).
 - Late deliveries are not just a big-state problem. SP and RJ together make up about 55% of delivered orders and about half (51%) of late orders, roughly in line with their size. The difference is within the pair: SP does better than its size (42% of orders, 28% of late orders), while RJ does worse (13% of orders, 23% of late orders; 12.1% of its orders are late vs 4.5% in SP) and has lower reviews (3.97 vs 4.25).
 - States with higher late rates have lower average reviews, consistent with Q2: across the 24 states, the correlation between late rate and average review score is -0.91. The lowest-rated states (MA 3.83, AL 3.85, PA and SE 3.91) all have late rates above 11%. This is a state-level pattern, so it supports the order-level result in Q2 rather than replacing it.
