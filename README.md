@@ -1,7 +1,7 @@
 # Olist E-commerce Analysis
 
 Business analysis of the Olist Brazilian e-commerce public dataset (about 99k orders, spanning 2016 to 2018).
-Tools: Python, DuckDB (SQL), pandas, matplotlib.
+Tools: Python, DuckDB (SQL), pandas, matplotlib, Power BI.
 
 ## Key findings and recommendations
 
@@ -21,6 +21,15 @@ Scope: 96,470 delivered orders and 93,350 customers with a delivered order (Sep 
 
 5. **Revenue is broad-based, and credit card dominates payments.** The top 10 categories make up 62% of revenue, and watches_gifts earns its rank on high spend per order (about R$212 vs R$110 for bed_bath_table). Credit card is used in 77% of orders, and credit-card orders have a higher typical value than boleto orders (median R$109 vs R$94), often paid in instalments (3.5 on average).
    *Suggested action:* keep credit card and instalment options prominent at checkout. The data shows card orders are larger, not that instalments cause larger orders.
+
+## Power BI dashboard
+
+[![Dashboard overview](reports/dashboard_overview.png)](reports/dashboard_overview.png)
+
+A one-page Power BI dashboard summarises the analysis: headline KPIs, monthly revenue, top categories, late deliveries by state (with a region filter) and average review score by delivery lateness. Click the image to view it at full size.
+
+- File: `dashboard/olist_dashboard.pbix` (open with Power BI Desktop on Windows).
+- The dashboard is built from small summary tables exported by the last cells of the notebook (`data/processed/powerbi/`), which are not stored in the repo. The data is already embedded in the `.pbix`, so it opens without them.
 
 ## Business questions
 1. Which product categories generate the most revenue, and how has revenue trended month by month?
@@ -52,6 +61,8 @@ Scope: 96,470 delivered orders and 93,350 customers with a delivered order (Sep 
 2. Download the **Brazilian E-Commerce Public Dataset by Olist** from Kaggle and place the 9 CSV files in `data/raw/`.
 3. Open `notebooks/01-explore.ipynb`, select the `.venv` kernel and run all cells in order. The first cell builds a local DuckDB database from the CSVs, and the rest run the cleaning and analysis.
 
+Data: Brazilian E-Commerce Public Dataset by Olist, from Kaggle (see the dataset page for its license terms).
+
 The raw data and the database file are not stored in this repo (see `.gitignore`).
 
 ## Findings
@@ -76,7 +87,7 @@ The raw data and the database file are not stored in this repo (see `.gitignore`
 
 ### Q3: Customers and delivery by state
 - Customers are heavily concentrated: São Paulo (SP) has 41.9% of unique customers, followed by Rio de Janeiro (RJ, 12.9%) and Minas Gerais (MG, 11.7%). The top 3 states hold 66.5% of customers and the top 10 hold 90.4%.
-- Delivery speed follows geography: the median is 7.2 days in SP, about 10 days in MG and PR, and roughly 16 to 26 days (AM 25.9, AL 22.3, PA 21.1, MA 19.2).
+- Delivery speed follows geography: the median is 7.2 days in SP, about 10 days in MG and PR, and roughly 16 to 26 days across the north and northeast (AM 25.9, AL 22.3, PA 21.1, MA 19.2).
 - Slow is not the same as late. AM is the slowest state but only 2.8% of its orders were late (small sample: 145 orders), while AL is both slow and late (21.4% late).
 - Late deliveries are not just a big-state problem. SP and RJ together make up about 55% of delivered orders and about half (51%) of late orders, roughly in line with their size. The difference is within the pair: SP does better than its size (42% of orders, 28% of late orders), while RJ does worse (13% of orders, 23% of late orders; 12.1% of its orders are late vs 4.5% in SP) and has lower reviews (3.97 vs 4.25).
 - States with higher late rates have lower average reviews, consistent with Q2: across the 24 states, the correlation between late rate and average review score is -0.91. The lowest-rated states (MA 3.83, AL 3.85, PA and SE 3.91) all have late rates above 11%. This is a state-level pattern, so it supports the order-level result in Q2 rather than replacing it.
