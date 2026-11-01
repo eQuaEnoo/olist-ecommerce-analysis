@@ -1,6 +1,7 @@
 # Olist E-commerce Analysis
 
 Business analysis of the Olist Brazilian e-commerce public dataset (about 99k orders, spanning 2016 to 2018).
+
 Tools: Python, DuckDB (SQL), pandas, matplotlib, Power BI.
 
 ## Key findings and recommendations
