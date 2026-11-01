@@ -111,3 +111,7 @@ The raw data and the database file are not stored in this repo (see `.gitignore`
 - Order value here includes freight (R$15.4M paid overall versus R$13.2M of item revenue), so it is not directly comparable with the revenue figures above.
 
 ![Payment methods](reports/payment_methods.png)
+
+## License
+
+Code and analysis: MIT License (see `LICENSE`). The Olist dataset is not covered by this license and keeps its own terms; see its Kaggle page.
