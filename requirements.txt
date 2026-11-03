@@ -4,3 +4,5 @@ matplotlib
 jupyterlab
 ipykernel
 numpy
+scikit-learn
+scikit-learn
