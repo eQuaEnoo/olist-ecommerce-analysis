@@ -63,8 +63,8 @@ A one-page Power BI dashboard summarises the analysis: headline KPIs, monthly re
    pip install -r requirements.txt
    ```
 2. Download the **Brazilian E-Commerce Public Dataset by Olist** from Kaggle and place the 9 CSV files in `data/raw/`.
-3. Open `notebooks/01-explore.ipynb`, select the `.venv` kernel and run all cells in order. The first cell builds a local DuckDB database from the CSVs, and the rest run the cleaning and analysis. 
-Then run `notebooks/02-predict-late-delivery.ipynb`. It reads the database and views created by notebook 01, so run 01 first and restart its kernel (or close it) before running 02, because DuckDB allows only one writer at a time.
+3. Open `notebooks/01-explore.ipynb`, select the `.venv` kernel and run all cells in order. The first cell builds a local DuckDB database from the CSVs, and the rest run the cleaning and analysis.
+4. Then run `notebooks/02-predict-late-delivery.ipynb`. It reads the database and views created by notebook 01, so run 01 first and restart its kernel (or close it) before running 02, because DuckDB allows only one writer at a time.
 
 Data: Brazilian E-Commerce Public Dataset by Olist, from Kaggle (see the dataset page for its license terms).
 
@@ -125,7 +125,7 @@ Notebook: `notebooks/02-predict-late-delivery.ipynb`
 
 **Setup:** one row per delivered order (96,470); target `is_late` (delivered after the estimated date, 6.8% overall). Features are limited to what is known at purchase: promised delivery window, seller-to-customer distance, customer and seller state, basket size, price, freight, product weight and volume, category, payment type and purchase time. Delivery dates, review scores and anything else known only after purchase are excluded. Training is Jan 2017 to Mar 2018 and testing is Apr to Aug 2018 (a time-based split, never random), with training orders not yet delivered at the split date removed so that no label is used before it would be known.
 
-**Model selection:** logistic regression and gradient boosting were compared on four expanding-window validation blocks inside the training period (ROC-AUC 0.63 to 0.71). Logistic regression was ahead or level in every block, so logistic regression (C=0.1) was chosen under a rule fixed in advance (best mean ROC-AUC, ties to the simpler model) and scored on the test set once.
+**Model selection:** logistic regression and gradient boosting were compared on four expanding-window validation blocks inside the training period (ROC-AUC 0.63 to 0.71). Logistic regression was ahead or level in every block, so logistic regression (C=0.1) was chosen on mean validation ROC-AUC, with ties going to the simpler model, using validation data only, before the test set was scored.
 
 **Results (test period):**
 - ROC-AUC 0.704 (95% bootstrap interval 0.692 to 0.717); PR-AUC 0.091 (0.083 to 0.101) against a no-skill 0.044. An "always on time" model scores 95.6% accuracy, so accuracy is not used.
@@ -142,6 +142,8 @@ Notebook: `notebooks/02-predict-late-delivery.ipynb`
 - All three high-lateness months (Nov 2017, Feb and Mar 2018) are in the training period, so performance during a bad month is untested. Validation blocks show ROC-AUC between 0.63 and 0.71, so expect about 0.65 to 0.70 in practice.
 - The late rate is 8.0% in training and 4.4% in test, so predicted probabilities are not calibrated and the model should be used for ranking only.
 - Distance is the straight-line distance between zip-code centres; four implausible values (over 4,500 km) were treated as missing.
+- Feature importance was computed on the test set and is descriptive only; it was not used to select features.
+- The model was evaluated on a single test window (Apr to Aug 2018), so the result is one time-based sample, not a repeated one.
 
 ## License
 
