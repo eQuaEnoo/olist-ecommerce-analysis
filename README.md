@@ -125,7 +125,7 @@ Notebook: `notebooks/02-predict-late-delivery.ipynb`
 
 **Setup:** one row per delivered order (96,470); target `is_late` (delivered after the estimated date, 6.8% overall). Features are limited to what is known at purchase: promised delivery window, seller-to-customer distance, customer and seller state, basket size, price, freight, product weight and volume, category, payment type and purchase time. Delivery dates, review scores and anything else known only after purchase are excluded. Training is Jan 2017 to Mar 2018 and testing is Apr to Aug 2018 (a time-based split, never random), with training orders not yet delivered at the split date removed so that no label is used before it would be known.
 
-**Model selection:** logistic regression and gradient boosting were compared on four expanding-window validation blocks inside the training period (ROC-AUC 0.63 to 0.71). Logistic regression was ahead or level in every block, so logistic regression (C=0.1) was chosen on mean validation ROC-AUC, with ties going to the simpler model, using validation data only, before the test set was scored.
+**Model selection:** logistic regression and gradient boosting were compared on four expanding-window validation blocks inside the training period (ROC-AUC 0.60 to 0.71 across models and blocks). Logistic regression was ahead or level in every block, so logistic regression (C=0.1) was chosen on mean validation ROC-AUC, with ties going to the simpler model, using validation data only, before the test set was scored.
 
 **Results (test period):**
 - ROC-AUC 0.704 (95% bootstrap interval 0.692 to 0.717); PR-AUC 0.091 (0.083 to 0.101) against a no-skill 0.044. An "always on time" model scores 95.6% accuracy, so accuracy is not used.
