@@ -1,10 +1,18 @@
-# Olist E-commerce Analysis
+# Olist E-commerce Analysis: Predicting Late Deliveries
 
-Business analysis of the Olist Brazilian e-commerce public dataset (about 99k orders, spanning 2016 to 2018).
+A data science project on the Olist Brazilian e-commerce public dataset (about 99k orders, 2016 to 2018). It finds what drives unhappy customers, then builds a model that flags orders likely to arrive late at the moment they are placed.
 
 Tools: Python, DuckDB (SQL), pandas, scikit-learn, matplotlib, Power BI.
 
-## Key findings and recommendations
+## Headline result: flagging late orders at purchase time
+
+A logistic regression using only information known at checkout was tested on a held-out period (Apr to Aug 2018) with a time-based split.
+
+- ROC-AUC 0.70 (95% bootstrap interval 0.69 to 0.72). Flagging the riskiest 10% of orders catches 23% of late orders, a lift of 2.3 over the 4.4% base rate.
+- The signal is real but modest: about one flagged order in ten is actually late, so flags suit cheap actions such as proactive customer messages.
+- Method, validation and limitations: [Part 2](#part-2-predicting-late-deliveries-at-purchase-time).
+
+## Key findings from the analysis
 
 Scope: 96,470 delivered orders and 93,350 customers with a delivered order (Sep 2016 to Aug 2018), worth R$13.2M in item revenue. Details, definitions and charts for each question are further down.
 
